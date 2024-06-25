@@ -2,19 +2,19 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold
-
+import numpy as np
 # Function to train the model
 def train_logistic_regression(x_train_scaled, y_train):
     lrmodel = LogisticRegression().fit(x_train_scaled, y_train)
     return lrmodel
 
 def train_decision_tree_classifier(X_train, y_train):
-    dtc_model = DecisionTreeClassifier(max_depth=3, max_features=10, random_state=567).fit(X_train,y_train)
+    dtc_model = DecisionTreeClassifier(max_depth=5, min_samples_leaf= 5,max_features='sqrt', random_state=567).fit(X_train,y_train)
     return dtc_model
 
 def train_random_forest_classifier(X_train_scaled, y_train):
     rfc_model = RandomForestClassifier(n_estimators=100, 
-                                 min_samples_leaf=5, 
+                                 min_samples_leaf=5, max_depth=5, 
                                  max_features='sqrt').fit(X_train_scaled, y_train)
     return rfc_model
 
@@ -55,6 +55,8 @@ def kfold_model_selection(model_name, x_scaled, y, fold):
             best_score = score
             best_model = model  # Save the best model
             best_fold = fold + 1  # Save the fold number
+
+    scores = np.array(scores)
 
     # Print the accuracy scores for each fold
     print("Accuracy scores:", scores)

@@ -17,7 +17,7 @@ def load_data(data_path):
 def clean_dataset(dataset):
     
     print("How many application were approved and how many were denied?")
-    LoanStatus_barchart(dataset)
+    LoanStatus_barchart(dataset, 'Loan-Eligibility-Model/reports/figures/loan_status_barchart.png')
     
     print("Check for missing values:")
     print(dataset.isnull().sum())
@@ -27,7 +27,7 @@ def clean_dataset(dataset):
     
 
     print("Distribution of Loan Amount:")
-    LoanAmount_displot(dataset)
+    LoanAmount_displot(dataset, 'Loan-Eligibility-Model/reports/figures/LoanAmount_displot.png')
     
     dataset['Gender'].fillna('Male', inplace=True)
     dataset['Married'].fillna(dataset['Married'].mode()[0], inplace=True)
@@ -47,6 +47,6 @@ def clean_dataset(dataset):
     print("Preview processed dataset")
     print(dataset.head())
     
-    dataset.to_csv("Loan-Eligibiltity-Model/data/processed",index=None)
+    dataset.to_csv("Loan-Eligibility-Model/data/processed/processed_credit.csv",index=None)
     
     return dataset

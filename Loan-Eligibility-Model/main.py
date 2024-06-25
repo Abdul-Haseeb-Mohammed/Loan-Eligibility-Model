@@ -3,7 +3,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pickle
-
+import warnings
+warnings.filterwarnings("ignore")
 from src.data.make_dataset import load_data, clean_dataset
 from src.features.build_features import train_test_splitter, standardize
 from src.models.train_model import train_logistic_regression, train_decision_tree_classifier, train_random_forest_classifier, kfold_model_selection
@@ -12,7 +13,7 @@ from src.visualization.visualize import plot_tree
 
 if __name__ == "__main__":
     # Load and preprocess the data
-    data_path = "Loan-Eligibiltity-Model/data/raw/credit.csv"
+    data_path = "Loan-Eligibility-Model/data/raw/credit.csv"
     df = load_data(data_path)
 
     #cleaning the data
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     lrmodel = train_logistic_regression(X_train, y_train)
 
     # Save the trained model
-    with open('models/logistic_regression.pkl', 'wb') as f:
+    with open('Loan-Eligibility-Model/models/logistic_regression.pkl', 'wb') as f:
         pickle.dump(lrmodel, f)
 
     # Show the metrics of models
@@ -46,7 +47,7 @@ if __name__ == "__main__":
     dtc_model = train_decision_tree_classifier(X_train, y_train)
     
     # Save the trained model
-    with open('models/decision_tree_classifier.pkl', 'wb') as f:
+    with open('Loan-Eligibility-Model/models/decision_tree_classifier.pkl', 'wb') as f:
         pickle.dump(dtc_model, f)
 
     # Display evaluation metrics for Decision Tree Classifier
@@ -57,13 +58,13 @@ if __name__ == "__main__":
     print("Decision Tree Classifier Confusion Matrix:", dtc_test_cf)
     
     #Plot the decision tree
-    plot_tree(dtc_model, dtc_model.feature_names_in_, save_path='reports/figures/decision_tree.png')
+    #plot_tree(dtc_model, dtc_model.feature_names_in_, save_path='Loan-Eligibility-Model/reports/figures/decision_tree.png')
     
     #Train the Random Forest Classifier
     rfc_model = train_random_forest_classifier(X_train, y_train)
     
     # Save the trained model
-    with open('models/random_forest_classifier.pkl', 'wb') as f:
+    with open('Loan-Eligibility-Model/models/random_forest_classifier.pkl', 'wb') as f:
         pickle.dump(rfc_model, f)
  
     # Display evaluation metrics for Random Forest Classifier
@@ -74,14 +75,14 @@ if __name__ == "__main__":
     print("Random Forest Regressor Confusion Matrix:", rfc_test_cf)
     
     #Plot the Random Forest Regressor
-    plot_tree(rfc_model.estimators_[2], dtc_model.feature_names_in_, save_path='reports/figures/random_forst_decision_tree2.png')
+    #plot_tree(rfc_model.estimators_[2], dtc_model.feature_names_in_, save_path='Loan-Eligibility-Model/reports/figures/random_forst_decision_tree2.png')
     
     print("Using 5-Fold Cross Validation to pick best model:")
     lr_best_model = kfold_model_selection("Logistic Regression", x_scaled, cleaned_dataset['Loan_Status'],5)
     
     # Save the best model to a file
     best_logistic_regression_model_filename = 'best_model_logistic_regression.pkl'
-    with open("models/" + best_logistic_regression_model_filename, 'wb') as file:
+    with open("Loan-Eligibility-Model/models/" + best_logistic_regression_model_filename, 'wb') as file:
         pickle.dump(lr_best_model, file)
     print(f"Saved logistic regression best model as '{best_logistic_regression_model_filename}'")
     
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     
     # Save the best model to a file
     best_decision_tree_classifier_filename = 'best_model_Decision_Tree_Classifier.pkl'
-    with open("models/" + best_decision_tree_classifier_filename, 'wb') as file:
+    with open("Loan-Eligibility-Model/models/" + best_decision_tree_classifier_filename, 'wb') as file:
         pickle.dump(dtc_best_model, file)
     print(f"Saved Decision Tree Classifier best model as '{best_decision_tree_classifier_filename}'")
     
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     
     # Save the best model to a file
     best_random_forest_classifier_filename = 'best_model_Random_Forest_Classifier.pkl'
-    with open("models/" + best_random_forest_classifier_filename, 'wb') as file:
+    with open("Loan-Eligibility-Model/models/" + best_random_forest_classifier_filename, 'wb') as file:
         pickle.dump(rfc_best_model, file)
     print(f"Saved Random Forest Classifier best model as '{best_random_forest_classifier_filename}'")
     
