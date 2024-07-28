@@ -1,8 +1,5 @@
 # Import accuracy score
 from sklearn.metrics import accuracy_score, confusion_matrix
-from sklearn.model_selection import cross_val_score
-
-from sklearn.metrics import accuracy_score, confusion_matrix
 
 def run_and_evaluate_model_logistic_regression(model, X_train, X_test, y_train, y_test, *threshold):
     if threshold:
